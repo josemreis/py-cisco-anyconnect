@@ -52,9 +52,10 @@ class cisco_vpn():
         else:
             print("currently connected to eduroam. Not connecting to the vpn.")
     ## disconnect
-    def cisco_disconnect():
+    def cisco_disconnect(self):
         sub.call("/opt/cisco/anyconnect/bin/vpn disconnect", shell = True)
     ## check the status
-    def cisco_status():
+    def cisco_status(self):
         out = sub.check_output("/opt/cisco/anyconnect/bin/vpn state", shell = True)
         return list(set([l.replace("\\n\\r", "").strip() for l in str(out).split(">>") if "state:" in l]))[0]
+    
