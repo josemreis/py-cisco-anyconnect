@@ -9,7 +9,9 @@ from wrapper import *
 
 password = input('Password: ')
 print(password)
-vpn = cisco_vpn(username = "frvx037", pswrd = password, account_domain = "uni-hamburg.de", host = "vpn.rrz.uni-hamburg.de")
+username = input('username: ')
+print(username)
+vpn = cisco_vpn(username = username, pswrd = password, account_domain = "uni-hamburg.de", host = "vpn.rrz.uni-hamburg.de")
 vpn.cisco_connect()
 print(vpn.cisco_status())
 vpn.cisco_disconnect()

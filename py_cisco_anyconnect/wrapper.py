@@ -9,16 +9,15 @@ import subprocess as sub
 
 ### cisco_vpn class
 class cisco_vpn():
-    def __init__(self, username = None, pswrd = None, account_domain = "uni-hamburg.de", host = "vpn.rrz.uni-hamburg.de", lastlog_path = None):
+    def __init__(self, username: str, pswrd: str, account_domain = "my_domain.de", host = "vpn.xkz.my_domain.de", check_for_eduroam = True):
         self.account_domain = account_domain
         self.host = host
-        self.lastlog_path = lastlog_path
         self.username = username
-        if isinstance(pswrd, str):
-            self.pswrd = pswrd
+        self.pswrd = pswrd
+        if check_for_eduroam:
+            self.is_eduroam = "eduroam" in str(sub.check_output("nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\: -f2", shell = True))
         else:
-            raise ValueError("No password was provided.")
-        self.is_eduroam = "eduroam" in str(sub.check_output("nmcli -t -f active,ssid dev wifi | egrep '^yes' | cut -d\: -f2", shell = True))
+            self.is_eduroam = None
     ## log in 
     def cisco_connect(self):
         ## check if connected to eduroam, if yes no need to connect to vpn
